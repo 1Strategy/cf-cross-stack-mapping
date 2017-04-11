@@ -1,0 +1,81 @@
+#!/usr/bin/env python
+import boto3
+import re
+
+inuser = boto3.session.Session(profile_name='inContact-User')
+
+client = inuser.client('cloudformation')
+
+response = client.list_exports()
+
+l = response.get('Exports', {})
+print '{ "links": ['
+for x in l:
+    s = x['ExportingStackId']
+    t = x["Name"]
+    print '{"source":"', re.search('.*/(.*)/.*', s).group(1), '","target":"', t, '","value":"1.0"},'
+    # Still need to remove comma at the end of the iterations
+    try:
+        if client.list_imports(ExportName=t):
+            cl = client.list_imports(ExportName=t)
+            im = cl["Imports"]
+            for x in im:
+                print '{"source":"', t, '","target":"', x, '","value":"1.0"},'
+    except:
+        pass
+print '], "nodes": ['
+for x in l:
+    s = x['ExportingStackId']
+    print '{"name":"', re.search('.*/(.*)/.*', s).group(1), '"},'
+for x in l:
+    print '{"name":"', x["Name"], '"},'
+    t = x["Name"]
+    try:
+        if client.list_imports(ExportName=t):
+            cl = client.list_imports(ExportName=t)
+            im = cl["Imports"]
+            for z in im:
+                print '{"name":"', z, '"},'
+    except:
+        pass
+print ']}'
+
+################################################################################
+# ----Still need to remove comma at the end of the iterations
+# Could possibly write to list then print list like this:
+# output = []
+# for i in range(1, 101):
+#   if i % 15 == 0:
+#     output.append("FizzBuzz")
+#   #etc
+# #exiting for loop: you now have a list containing your "things" in order.
+# #output = ["1", "2", "Fizz", "4" ...]
+# print(", ".join(output))
+# This could possibly work as well
+# print ', '.join(actorsByMovies())
+################################################################################
+# ----Still need to eliminate duplicates for names and links
+# Code below could possibly work:
+# lines_seen = set() # holds lines already seen
+# outfile = open(outfilename, "w")
+# for line in open(infilename, "r"):
+#     if line not in lines_seen: # not a duplicate
+#         outfile.write(line)
+#         lines_seen.add(line)
+# outfile.close()
+# Another possible solution:
+# lines = open('workfile.txt', 'r').readlines()
+#
+# lines_set = set(lines)
+#
+# out  = open('workfile.txt', 'w')
+#
+# for line in lines_set:
+#     out.write(line)
+#
+# Could also use this:
+# uniqlines = set(open('/tmp/foo').readlines())
+# bar = open('/tmp/bar', 'w').writelines(set(uniqlines))
+# bar.close()
+################################################################################
+# ----Still need to print output to json file instead of STDOUT
