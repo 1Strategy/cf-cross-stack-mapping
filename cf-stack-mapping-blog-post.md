@@ -14,7 +14,7 @@ There is one problem with cross stack references. When your infrastructure is fa
 To solve the problems with complex cross stack references, I fell back to my tried and trusted friends data, analysis, and visualization. In this case not much analysis was needed. All that's needed to solve the problem is some way to get data about all the cross stack references, and then some way to visualize them.
 
 ### Getting the Data
-To get the necessary data I used the AWS Python SDK boto3 (https://aws.amazon.com/sdk-for-python/). I first hit the AWS account and grab all the CloudFormation exports and the name of the template from which they are being exported. I then iterate over all those exports and retrieve all the places where they are being imported and the name of that template.  
+To get the necessary data I used the AWS Python SDK Boto3 (https://aws.amazon.com/sdk-for-python/). I first hit the AWS account and retrieve all the CloudFormation exports and the name of the template from which they are being exported. I then iterate over all those exports and retrieve all the places where they are being imported and the name of that template.  
 
 ### D3 and the Sankey Diagram
 Why I chose the Sankey vs a network diagram (mainly because I wanted to see the flow of the references between the stacks vs just the connections). (https://en.wikipedia.org/wiki/Sankey_diagram). Also, why I chose to use the D3 library (https://d3js.org/), easy to use javascript library and it would create a nice visualization that would be easy to view and share with any modern web browser. Also, addded the Flare chart for a different type of view.
@@ -22,5 +22,5 @@ Why I chose the Sankey vs a network diagram (mainly because I wanted to see the 
 ### Summary and Conclusions.
 In the end a customer can see the complete relationships between all the stacks in their environment. So far the most useful feature has been to see when there are exports that are not being used and removing them to make the cross stack references more efficient and easier to maintain. The other thing this may be useful for is to see an overall picture of your AWS infrastructure and how things are related within it.
 
-**P.S. Some future considerations:**
+**Some future considerations:**
 Better color coding of the nodes. For instance, one color to denote stacks and another color to denote exports.
