@@ -1,0 +1,42 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "inContact Area Global servers",
+  "Resources": {
+    "TestingCoreSecurityGroup" : {
+      "Type": "AWS::EC2::SecurityGroup",
+      "Properties": {
+        "GroupDescription": "Testing Core Security Group",
+        "VpcId": { "Fn::ImportValue" : "CreateExports-CoreVpc" }
+      }
+    },
+    "TestingDMZSecurityGroup" : {
+      "Type": "AWS::EC2::SecurityGroup",
+      "Properties": {
+        "GroupDescription": "Testing DMZ Security Group",
+        "VpcId": { "Fn::ImportValue" : "CreateExports-DMZVpc" }
+      }
+    },
+    "CustomResourceForTesting" : {
+       "Type": "Custom::PingTester",
+       "Version" : "1.0",
+       "Properties" : {
+          "ServiceToken": "arn:aws:sns:us-east-1:12345EXAMPLE:CRTest",
+          "key1" : { "Fn::ImportValue" : "CreateExports-Subnet1" },
+          "key2" : { "Fn::ImportValue" : "CreateExports-Subnet2" },
+          "key3" : { "Fn::ImportValue" : "CreateExports-DMZSubnet1" }
+       }
+    }
+  },
+  "Outputs": {
+    "TestingSGOutput": {
+      "Description": "Testing SecurityGroup Output",
+      "Value": {"Ref":"TestingCoreSecurityGroup"},
+      "Export": {"Name":"ExampleImports-SecurityGroup"}
+    },
+    "TestingCROutput": {
+      "Description": "Testing Custom Resource Output",
+      "Value": {"Ref":"CustomResourceForTesting"},
+      "Export": {"Name":"ExampleImports-CustomResource"}
+    }
+  }
+}

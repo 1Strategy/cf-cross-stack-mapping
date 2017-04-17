@@ -1,0 +1,30 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "inContact Area Global servers",
+  "Resources": {
+    "TestingCoreSecurityGroup2" : {
+      "Type": "AWS::EC2::SecurityGroup",
+      "Properties": {
+        "GroupDescription": "Testing Core Security Group 2",
+        "VpcId": { "Fn::ImportValue" : "CreateExports-CoreVpc" }
+      }
+    },
+    "TestingDMZSecurityGroup2" : {
+      "Type": "AWS::EC2::SecurityGroup",
+      "Properties": {
+        "GroupDescription": "Testing DMZ Security Group 2",
+        "VpcId": { "Fn::ImportValue" : "CreateExports-DMZVpc" }
+      }
+    },
+    "CustomResourceForTesting2" : {
+       "Type": "Custom::PingTester",
+       "Version" : "1.0",
+       "Properties" : {
+          "ServiceToken": "arn:aws:sns:us-east-1:12345EXAMPLE:CRTest",
+          "key1" : { "Fn::ImportValue" : "CreateExports-Subnet1" },
+          "key2" : { "Fn::ImportValue" : "CreateExports-Subnet2" },
+          "key3" : { "Fn::ImportValue" : "CreateExports-DMZSubnet1" }
+       }
+    }
+  }
+}

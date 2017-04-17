@@ -1,0 +1,67 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "AWS CloudFormation Template for creating sample exports to test the visualization",
+  "Parameters": {
+    "VPCID": {
+      "Description": "Enter the VPC ID where the dummy SecurityGroup will be created.",
+      "Type": "String",
+      "Default": "vpc-********"
+    }
+  },
+  "Resources": {
+    "DummySecurityGroup" : {
+      "Type": "AWS::EC2::SecurityGroup",
+      "Properties": {
+        "GroupDescription": "Dummy security group which allowed the creation of a CloudFormation stack that exports values.",
+        "VpcId": {"Ref": "VPCID"}
+      }
+    }
+  },
+  "Outputs": {
+    "Subnet1": {
+      "Description": "First example Subnet",
+      "Value": "subnet-abcd1234",
+      "Export": {"Name":"CreateExports-Subnet1"}
+    },
+    "Subnet2": {
+      "Description": "Second example Subnet",
+      "Value": "subnet-abcd5678",
+      "Export": {"Name":"CreateExports-Subnet2"}
+    },
+    "DMZSubnet1": {
+      "Description": "First example DMZSubnet",
+      "Value": "subnet-abcd4321",
+      "Export": {"Name":"CreateExports-DMZSubnet1"}
+    },
+    "DMZSubnet2": {
+      "Description": "Second example DMZSubnet",
+      "Value": "subnet-abcd8765",
+      "Export": {"Name":"CreateExports-DMZSubnet2"}
+    },
+    "CoreVpc": {
+      "Description": "Core Network VPC ID",
+      "Value": {"Ref": "VPCID"},
+      "Export": {"Name":"CreateExports-CoreVpc"}
+    },
+    "DMZVpc": {
+      "Description": "DMZ Network VPC ID",
+      "Value": {"Ref": "VPCID"},
+      "Export": {"Name":"CreateExports-DMZVpc"}
+    },
+    "CoreServerSecurityGroup": {
+      "Description": "Core Server Security Group",
+      "Value": "sg-abcd1234",
+      "Export" : { "Name" : "CreateExports-CoreServerSecurityGroup" }
+    },
+    "DMZServerSecurityGroup": {
+      "Description": "DMZ Server Security Group",
+      "Value": "sg-abcd5678",
+      "Export" : { "Name" : "CreateExports-DMZServerSecurityGroup" }
+    },
+    "S3Endpoint": {
+      "Description":"S3 VPC Endpoint",
+      "Value": "vpce-abcd1234",
+      "Export":{"Name":"CreateExports-S3Endpoint"}
+    }
+  }
+}
