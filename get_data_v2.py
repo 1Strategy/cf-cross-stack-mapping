@@ -3,7 +3,7 @@ import boto3
 import re
 
 f1=open('sourcedata-output.json', 'w+')
-inuser = boto3.session.Session(profile_name='inContact-User')
+inuser = boto3.session.Session(profile_name='default')
 client = inuser.client('cloudformation')
 response = client.list_exports()
 l = response.get('Exports', {})

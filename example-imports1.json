@@ -1,6 +1,13 @@
 {
   "AWSTemplateFormatVersion": "2010-09-09",
-  "Description": "inContact Area Global servers",
+  "Description": "Example Imports from Create Exports Stack",
+  "Parameters": {
+    "LambdaFunctionName": {
+			"Description": "Enter the name of any Lambda function to be used for testing.",
+			"Type": "String",
+			"Default": ""
+		}
+  },
   "Resources": {
     "TestingCoreSecurityGroup1" : {
       "Type": "AWS::EC2::SecurityGroup",
@@ -20,7 +27,7 @@
        "Type": "Custom::PingTester",
        "Version" : "1.0",
        "Properties" : {
-          "ServiceToken": "arn:aws:sns:us-east-1:12345EXAMPLE:CRTest",
+          "ServiceToken": { "Fn::Join": [ "", [ "arn:aws:lambda:", { "Ref": "AWS::Region" }, ":", { "Ref": "AWS::AccountId" }, ":function:", {"Ref" : "LambdaFunctionName"} ] ] },
           "key1" : { "Fn::ImportValue" : "CreateExports-Subnet1" },
           "key2" : { "Fn::ImportValue" : "CreateExports-Subnet2" },
           "key3" : { "Fn::ImportValue" : "CreateExports-DMZSubnet1" }
