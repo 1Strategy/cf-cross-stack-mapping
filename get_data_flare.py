@@ -2,7 +2,7 @@
 import boto3
 import re
 
-inuser = boto3.session.Session(profile_name='inContact-User')
+inuser = boto3.session.Session(profile_name='default')
 client = inuser.client('cloudformation')
 response = client.list_exports()
 f1=open('temp.in', 'w+')
