@@ -1,6 +1,6 @@
 { "links": [
 {"source":"Create-Exports-Stack","target":"CreateExports-CoreServerSecurityGroup","value":"1.0"},
-{"source":"Create-Exports-Stack","target":"CreateExports-CoreVpc","value":"1.0"},
+{"source":"Create-Exports-Stack","target":"CreateExports-CoreVpc","value":"4.0"},
 {"source":"CreateExports-CoreVpc","target":"Example-Imports1","value":"1.0"},
 {"source":"CreateExports-CoreVpc","target":"Example-Imports0","value":"1.0"},
 {"source":"CreateExports-CoreVpc","target":"Example-Imports2","value":"1.0"},
@@ -9,7 +9,7 @@
 {"source":"Create-Exports-Stack","target":"CreateExports-DMZSubnet1","value":"1.0"},
 {"source":"CreateExports-DMZSubnet1","target":"Example-Imports-New","value":"1.0"},
 {"source":"Create-Exports-Stack","target":"CreateExports-DMZSubnet2","value":"1.0"},
-{"source":"Create-Exports-Stack","target":"CreateExports-DMZVpc","value":"1.0"},
+{"source":"Create-Exports-Stack","target":"CreateExports-DMZVpc","value":"4.0"},
 {"source":"CreateExports-DMZVpc","target":"Example-Imports1","value":"1.0"},
 {"source":"CreateExports-DMZVpc","target":"Example-Imports0","value":"1.0"},
 {"source":"CreateExports-DMZVpc","target":"Example-Imports2","value":"1.0"},

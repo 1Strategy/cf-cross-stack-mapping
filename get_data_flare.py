@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import boto3
 import re
+import os
 
 inuser = boto3.session.Session(profile_name='default')
 client = inuser.client('cloudformation')
@@ -35,3 +36,5 @@ for line in open('temp.in', "r"):
        outfile.write(line)
        lines_seen.add(line)
 outfile.close()
+
+os.remove('temp.in')
