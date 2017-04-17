@@ -14,19 +14,23 @@ There is one problem with cross stack references. When your infrastructure is fa
 To solve the problems with complex cross stack references, I fell back to my tried and trusted friends data, analysis, and visualization. In this case not much analysis was needed. All that's needed, in this case, is some way to get data about all the cross stack references, and then some way to visualize them.
 
 ### Getting the Data
-To get the necessary data I used the AWS Python SDK Boto3 (https://aws.amazon.com/sdk-for-python/). I first hit the AWS account and retrieve all the CloudFormation exports and the name of the template from which they are being exported. I then iterate over all those exports and retrieve all the places where they are being imported and the name of that template. I then write the output to a json file that will be used for the visualization. Here is a link to the code: (https://github.com/ACHepcat/cf-cross-stack-mapping/blob/master/get_data_v2.py)
+To get the necessary data I used the AWS Python SDK Boto3 (https://aws.amazon.com/sdk-for-python/). I first hit the AWS account and retrieve all the CloudFormation exports and the name of the template from which they are being exported. I then iterate over all those exports and retrieve all the places where they are being imported and the name of that template. I then write the output to a json file that will be used for the visualization. Here is a link to the code: (https://github.com/1Strategy/cf-cross-stack-mapping/blob/master/get_data_sankey.py)
 
 ### D3 and the Sankey Diagram
-The next step was to somehow show all the connections between all the stacks and all the exports and imports. To accomplish this I chose to use a Sankey Diagram (https://en.wikipedia.org/wiki/Sankey_diagram). I chose the Sankey Diagram instead of the usual Network Diagram mainly because I wanted to see the flow of the references between the stacks versus just the connections. Sankey Diagrams are not in your typical visualization tools. So, to show and share the visualization I chose to use the D3 javascript library (https://d3js.org/). D3 is easy to use and it creates a nice visualization that is easy to view and share with any modern web browser. The other nice feature of the D3 Sankey Diagram is that it is interactive, and you can grab the nodes that represent the stacks and move them around as needed. I also experimented with a Flare Chart for a different type of view, however, the Flare Chart lacked a way to show the interconnections that I wanted to be able to see. The code for the D3 visuals can be found here (https://github.com/ACHepcat/cf-cross-stack-mapping). The interactive visualizations can be seen here (https://achepcat.github.io/), and below are example screen shots of each of the visualizations.
+The next step was to somehow show all the connections between all the stacks and all the exports and imports. To accomplish this I chose to use a Sankey Diagram (https://en.wikipedia.org/wiki/Sankey_diagram). I chose the Sankey Diagram instead of the usual Network Diagram mainly because I wanted to see the flow of the references between the stacks versus just the connections. Sankey Diagrams are not in your typical visualization tools. So, to show and share the visualization I chose to use the D3 javascript library (https://d3js.org/). D3 is easy to use and it creates a nice visualization that is easy to view and share with any modern web browser. The other nice feature of the D3 Sankey Diagram is that it is interactive, and you can grab the nodes that represent the stacks and move them around as needed. I also experimented with a Flare Chart for a different type of view, however, the Flare Chart lacked a way to show the interconnections that I wanted to be able to see.
+
+The code for the visuals can be found here (https://github.com/1Strategy/cf-cross-stack-mapping). The interactive visualizations can be seen here (https://1strategy.github.io/cf-cross-stack-mapping/), and below are example screen shots of each of the visualizations.
 
 **Sankey Diagram Example:**
-![Image](https://github.com/ACHepcat/cf-cross-stack-mapping/raw/master/ScreenShot.png)
+![Image](https://github.com/1Strategy/cf-cross-stack-mapping/raw/master/ScreenShotSankey.png)
 
 **Flare Chart Example:**
-![Image](https://github.com/ACHepcat/cf-cross-stack-mapping/raw/master/ScreenShot2.png)
+![Image](https://github.com/1Strategy/cf-cross-stack-mapping/raw/master/ScreenShotFlare.png)
 
 ### Summary and Conclusions.
 In the end a customer can see the complete relationships between all the stacks in their environment. So far the most useful feature has been to see when there are exports that are not being used and removing them to make the cross stack references more efficient and easier to maintain. The other thing this may be useful for is to see an overall picture of your AWS infrastructure and how things are related within it.
 
 **Some future considerations:**
 Better color coding of the nodes. For instance, one color to denote stacks and another color to denote exports.
+
+A drop down to select only the stacks that you want to see. This would be especially helpful when the number of stacks deployed gets very large.
